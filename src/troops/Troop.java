@@ -1,20 +1,24 @@
 package troops;
+import javax.swing.*;
 
-public abstract class Troop {
+public class Troop {
 	public int HP, atkRange, team, mov, x, y;
-	public boolean isAtk, isMove, isActive, isAlive;
+	public boolean isAtk, isMove, isActive, isInvi;
 	final int panelSize = 48;
+	public JPanel panel;
+	public JLabel avatar;
 	public Troop() 
 	{
 		isActive=true;
-		isAlive=true;
 		isMove=false;
 		isAtk=false;
+		isInvi=false;
 		HP=100;
 	}
-	public Troop(int x, int y)
+	public Troop(int xx, int yy)
 	{
+		this();
+		this.x=xx;
+		this.y=yy;
 	}
-	public abstract void Move();
-	public abstract String toString();
 }
