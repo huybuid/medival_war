@@ -24,6 +24,7 @@ public class Troop {
 		this();
 		this.x=xx;
 		this.y=yy;
+		panel.setOpaque(true);
 		panel.setBounds(yy*panelSize,xx*panelSize,panelSize,panelSize);
 		panel.setBackground(new Color(0,0,0,0));
 	}

@@ -75,6 +75,7 @@ public class gameWindow {
 	            { 110, 70, 100 , 15 }
 	        };
 	public static int[][] terrain;
+	ArrayList<Point> list = new ArrayList<Point>();
 	Troop p;
 
 	/**
@@ -248,7 +249,9 @@ public class gameWindow {
 	void HighLightMove(Troop unit, int MoveRange, Color color)
     {
         int x, y, i, move;
-        ArrayList<Point> list = new ArrayList<Point>();
+        if (prevx==-1)
+        {
+        list.clear();
         list.add(new Point(0,0));
         int[][] StepMtrx = new int[2 * MoveRange + 1][2 * MoveRange + 3];
         for (i = 0; i < 2 * MoveRange + 1; i++)
@@ -320,6 +323,16 @@ public class gameWindow {
                 }
             }
             i++;
+        }
+        }
+        else
+        {
+        	for (i=0;i<list.size();i++)
+        	{
+        		x = unit.x + list.get(i).x;
+                y = unit.y + list.get(i).y;
+                map[x][y].panel.setBackground(color);
+        	}
         }
     }
 
