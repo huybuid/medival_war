@@ -35,6 +35,7 @@ import javax.swing.SwingConstants;
 public class gameWindow {
 
 	JFrame frame;
+	JPanel btnpanel = new JPanel();
 	JPanel infopanel = new JPanel();
 	JLabel lbPortrait = new JLabel();
 	JLabel lbUnit = new JLabel();
@@ -136,20 +137,24 @@ public class gameWindow {
 				Move();
 			}
 		});
-		JPanel panel = new JPanel();
-		panel.setBounds(926, 10, 260, 190);
 
-		panel.setBorder(border);
-		frame.getContentPane().add(panel);
-		panel.setLayout(null);
+		btnpanel.setBounds(926, 10, 260, 190);
+		btnpanel.setBorder(border);
+		frame.getContentPane().add(btnpanel);
+		btnpanel.setLayout(null);
 		
 		JButton btnNewButton = new JButton("End Turn");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EndTurn();
+			}
+		});
 		btnNewButton.setBounds(13, 25, 235, 68);
-		panel.add(btnNewButton);
+		btnpanel.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Surrender");
 		btnNewButton_1.setBounds(13, 109, 235, 68);
-		panel.add(btnNewButton_1);
+		btnpanel.add(btnNewButton_1);
 		
 
 		infopanel.setBounds(926, 210, 260, 399);
@@ -218,6 +223,8 @@ public class gameWindow {
         for (int i=1; i<9;i++)
         {
             map[i][0] = team1.get(i-1);
+            System.out.println(map[i][0] == team1.get(i-1));
+            System.out.println(map[i][0].equals(team1.get(i-1)));
             map[i][1] = team1.get(i + 7);
             map[i][mapWidth-1] = team2.get(i-1);
             map[i][mapWidth-2] = team2.get(i+7);
@@ -242,6 +249,7 @@ public class gameWindow {
     {
         int x, y, i, move;
         ArrayList<Point> list = new ArrayList<Point>();
+        list.add(new Point(0,0));
         int[][] StepMtrx = new int[2 * MoveRange + 1][2 * MoveRange + 3];
         for (i = 0; i < 2 * MoveRange + 1; i++)
         {
@@ -333,7 +341,7 @@ public class gameWindow {
             HighLightAtk(map[x][y + 1], Math.abs(((lck) ? map[prevx][prevy] : p).x - x) 
                 + Math.abs(((lck) ? map[prevx][prevy] : p).y - (y + 1)), AtkRange, lck);
         if (unit.team == turn || unit.team == 0 || lck)
-            unit.panel.setBackground(null);
+            unit.panel.setBackground(TrueTransparent);
     }
 	
     public void Move()
@@ -484,11 +492,13 @@ public class gameWindow {
         }
         MouseAdapter listener= new MouseAdapter()
     	{
+        	@Override
 			public void mouseClicked(MouseEvent e) {
+            	System.out.println("clicked");
 				JPanel clicked = (JPanel) e.getSource();
 	            p=map[clicked.getLocation().y/panelWidth][clicked.getLocation().x/panelHeight];
 	            //Nếu không có highlight => xóa hết highlight
-	            if (clicked.getBackground() == TrueTransparent)
+	            if (clicked.getBackground().getRGB()==TrueTransparent.getRGB())
 	            {
 	                SetupButtons();
 	                if (p.team == turn && p.isActive == true && prevx == -1)
@@ -515,7 +525,7 @@ public class gameWindow {
 	            else
 	            {
 	                //Nếu không có gì và có highlight => di chuyen
-	                if (clicked.getName()=="None" && clicked.getBackground() == colorMov)
+	                if (clicked.getName()=="None" && clicked.getBackground().getRGB() == colorMov.getRGB())
 	                {
 	                    {
 	                        HighLightMove(map[prevx][prevy], map[prevx][prevy].mov, TrueTransparent);
@@ -539,7 +549,7 @@ public class gameWindow {
 	                if (clicked.getName() != "None")
 	                {
 	                    //Nếu click vào unit khác thì bung move unit đó
-	                    if ((p.x!=prevx || p.y!=prevy) && clicked.getBackground() == colorMov)
+	                    if ((p.x!=prevx || p.y!=prevy) && clicked.getBackground().getRGB() == colorMov.getRGB())
 	                    {
 	                        HighLightMove(map[prevx][prevy], map[prevx][prevy].mov, TrueTransparent);
 	                        SetupButtons();
@@ -548,7 +558,7 @@ public class gameWindow {
 	                        return;
 	                    }
 	                    //Nếu unit được highlight tấn công
-	                    if (clicked.getBackground()==colorAtk)
+	                    if (clicked.getBackground().getRGB()==colorAtk.getRGB())
 	                    {
 	                        HighLightAtk(map[prevx][prevy],0,map[prevx][prevy].atkRange, true);
 	                        DamageCalc(map[prevx][prevy],p);
@@ -629,7 +639,8 @@ public class gameWindow {
         if (turn == 1)
         {
             turn = 2;
-            border.setTitle("Player 2");
+            border=BorderFactory.createTitledBorder("Player 2");
+            btnpanel.setBorder(border);
             for (Troop unit : team2)
             {
                 unit.isActive = true;
@@ -644,7 +655,8 @@ public class gameWindow {
         else
         {
             turn = 1;
-            border.setTitle("Player 1");
+            border=BorderFactory.createTitledBorder("Player 1");
+            btnpanel.setBorder(border);
             for (Troop unit : team1)
             {
                 unit.isActive = true;
