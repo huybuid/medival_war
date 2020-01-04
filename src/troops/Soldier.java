@@ -1,5 +1,7 @@
 package troops;
 
+import javax.swing.ImageIcon;
+
 public class Soldier extends Troop {
 	public Soldier()
 	{
@@ -9,10 +11,21 @@ public class Soldier extends Troop {
 	}
 	public Soldier(int xx, int yy, int t)
 	{
-		this();
+		super(xx,yy);
+		panel.setName("Soldier");
+		HP=100;
+		atkRange=1;
+		mov=3;
+		team=t;
+		ImageIcon ic;
+		if (t==1)
+			ic = new ImageIcon("src/resources/Soldier1.png");
+		else
+			ic = new ImageIcon("src/resources/Soldier2.png");
+		avatar.setIcon(ic);
+		panel.add(avatar);
 		x=xx;
 		y=yy;
-		team=t;
 	}
 	public Soldier(int hp, int xx, int yy, int t, boolean atk, boolean move, boolean act, boolean invi)
 	{

@@ -111,8 +111,7 @@ public class menuWindow {
 		JPanel panel = new JPanel();
 		panel.setBounds(124, 12, 1000, 300);
 		frame.getContentPane().add(panel);
-		
-		ImageIcon titleicon = new ImageIcon("src/resources/Title.png", "Medieval War Title");
+		ImageIcon titleicon = new ImageIcon("src/resources/Title.png");
 		JLabel title = new JLabel(titleicon);
 		panel.add(title);
 		
