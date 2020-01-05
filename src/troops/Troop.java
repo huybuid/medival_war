@@ -1,6 +1,7 @@
 package troops;
 import java.awt.Color;
 
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -26,6 +27,9 @@ public class Troop {
 		this.y=yy;
 		panel.setOpaque(true);
 		panel.setBounds(yy*panelSize,xx*panelSize,panelSize,panelSize);
-		panel.setBackground(new Color(0,0,0,0));
+		panel.setBackground(new Color(255,255,255,0));
+		ImageIcon ic=new ImageIcon("scr/resources/AvatarBlank.png");
+		avatar.setIcon(ic);
+		panel.add(avatar);
 	}
 }

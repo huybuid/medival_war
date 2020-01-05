@@ -16,15 +16,12 @@ import troops.*;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.JPopupMenu;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -45,8 +42,8 @@ public class gameWindow {
 	gameManager game=new gameManager();
 	private ImageIcon iconbackground;
 	
-	private static final Color FakeTransparent = new Color(0,0,0,1);
-	private static final Color TrueTransparent = new Color(0,0,0,0);
+	private static final Color FakeTransparent = new Color(255,255,255,1);
+	private static final Color TrueTransparent = new Color(255,255,255,0);
 	private static final ImageIcon iconSoldier=new ImageIcon("src/resources/SoldierP.png");
 	private static final ImageIcon iconArcher=new ImageIcon("src/resources/ArcherP.png");
 	private static final ImageIcon iconKnight=new ImageIcon("src/resources/KnightP.png");
@@ -179,6 +176,14 @@ public class gameWindow {
 
 		lbDescription.setBounds(10, 320, 240, 76);
 		infopanel.add(lbDescription);
+		
+		JLabel lblNewLabel = new JLabel("Unit:");
+		lblNewLabel.setBounds(70, 270, 45, 13);
+		infopanel.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("HP:");
+		lblNewLabel_1.setBounds(70, 290, 45, 13);
+		infopanel.add(lblNewLabel_1);
 		this.CreateFrontPanel(i);
 		JLabel lbbackground = new JLabel(iconbackground);
 		lbbackground.setBounds(0, 0, 768, 480);
@@ -276,8 +281,7 @@ public class gameWindow {
                     {
                         list.add(new Point(list.get(i).x - 1, list.get(i).y));
                     }
-                    StepMtrx[MoveRange + list.get(i).x - 1][MoveRange + list.get(i).y] =
-                        move;
+                    StepMtrx[MoveRange + list.get(i).x - 1][MoveRange + list.get(i).y] = move;
                 }
             }
             if (y > 0)
@@ -290,8 +294,7 @@ public class gameWindow {
                     {
                         list.add(new Point(list.get(i).x, list.get(i).y - 1));
                     }
-                    StepMtrx[MoveRange + list.get(i).x][MoveRange + list.get(i).y - 1] =
-                            move;
+                    StepMtrx[MoveRange + list.get(i).x][MoveRange + list.get(i).y - 1] = move;
                 }
             }
             if (x < mapHeight-1)
@@ -304,8 +307,7 @@ public class gameWindow {
                     {
                         list.add(new Point(list.get(i).x + 1, list.get(i).y));
                     }
-                    StepMtrx[MoveRange + list.get(i).x + 1][MoveRange + list.get(i).y] =
-                        move;
+                    StepMtrx[MoveRange + list.get(i).x + 1][MoveRange + list.get(i).y] = move;
                 }
             }
             if (y < mapWidth-1)
@@ -318,8 +320,7 @@ public class gameWindow {
                     {
                         list.add(new Point(list.get(i).x, list.get(i).y + 1));
                     }
-                    StepMtrx[MoveRange + list.get(i).x][MoveRange + list.get(i).y + 1] =
-                            move;
+                    StepMtrx[MoveRange + list.get(i).x][MoveRange + list.get(i).y + 1] =  move;
                 }
             }
             i++;
@@ -332,6 +333,7 @@ public class gameWindow {
         		x = unit.x + list.get(i).x;
                 y = unit.y + list.get(i).y;
                 map[x][y].panel.setBackground(color);
+                map[x][y].panel.setForeground(TrueTransparent);
         	}
         }
     }
@@ -340,17 +342,17 @@ public class gameWindow {
     {
         if (dist > AtkRange) return;
         int x = unit.x, y = unit.y;
-        unit.panel.setBackground((lck)? FakeTransparent: colorAtk);
-        if (x > 0 && map[x - 1][y].panel.getBackground() != ((lck) ? FakeTransparent : colorAtk))
+        unit.panel.setBackground((lck)? TrueTransparent: colorAtk);
+        if (x > 0 && map[x - 1][y].panel.getBackground() != ((lck) ? TrueTransparent : colorAtk))
             HighLightAtk(map[x - 1][y], Math.abs(((lck) ? map[prevx][prevy] : p).x - (x - 1)) + 
                 Math.abs(((lck) ? map[prevx][prevy] : p).y - y), AtkRange, lck);
-        if (x < mapHeight - 1 && map[x + 1][y].panel.getBackground() != ((lck) ? FakeTransparent : colorAtk))
+        if (x < mapHeight - 1 && map[x + 1][y].panel.getBackground() != ((lck) ? TrueTransparent : colorAtk))
             HighLightAtk(map[x + 1][y], Math.abs(((lck) ? map[prevx][prevy] : p).x - (x + 1))
                 + Math.abs(((lck) ? map[prevx][prevy] : p).y - y), AtkRange, lck);
-        if (y > 0 && map[x][y - 1].panel.getBackground() != ((lck) ? FakeTransparent : colorAtk))
+        if (y > 0 && map[x][y - 1].panel.getBackground() != ((lck) ? TrueTransparent : colorAtk))
             HighLightAtk(map[x][y - 1], Math.abs(((lck) ? map[prevx][prevy] : p).x - x) 
                 + Math.abs(((lck) ? map[prevx][prevy] : p).y - (y - 1)), AtkRange, lck);
-        if (y < mapWidth - 1 && map[x][y + 1].panel.getBackground() != ((lck) ? FakeTransparent : colorAtk))
+        if (y < mapWidth - 1 && map[x][y + 1].panel.getBackground() != ((lck) ? TrueTransparent : colorAtk))
             HighLightAtk(map[x][y + 1], Math.abs(((lck) ? map[prevx][prevy] : p).x - x) 
                 + Math.abs(((lck) ? map[prevx][prevy] : p).y - (y + 1)), AtkRange, lck);
         if (unit.team == turn || unit.team == 0 || lck)
@@ -422,6 +424,26 @@ public class gameWindow {
             }
         }
     }
+    
+    /*void RemoveHighlight(int l)
+    {
+    	if (prevx==-1) return;
+    	int i,j,k;
+    	j=-1;
+    	for(i=prevx-l;i<prevx+l;i++)
+    	{
+    		if (i>0 && i<mapWidth-1)
+    		{
+    			int k=Math.abs(j);
+    			for (j;j<=Math.abs(j);j++)
+    			{}
+    		}
+    		if (i<prevx)
+    			j-=2;
+    		else
+    			j+=2;
+    	}
+    }*/
 	
 	void DamageCalc(Troop atker, Troop defer)
     {
