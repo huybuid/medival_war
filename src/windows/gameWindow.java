@@ -27,6 +27,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JMenuItem;
 import javax.swing.SwingConstants;
+import javax.swing.JTextArea;
+import java.awt.SystemColor;
+import java.awt.Font;
 
 
 public class gameWindow {
@@ -37,7 +40,7 @@ public class gameWindow {
 	JLabel lbPortrait = new JLabel();
 	JLabel lbUnit = new JLabel();
 	JLabel lbHP = new JLabel();
-	JLabel lbDescription = new JLabel();
+	JTextArea textArea = new JTextArea();
 	TitledBorder border=BorderFactory.createTitledBorder("Player 1");
 	gameManager game=new gameManager();
 	private ImageIcon iconbackground;
@@ -171,11 +174,6 @@ public class gameWindow {
 
 		lbHP.setBounds(160, 290, 45, 13);
 		infopanel.add(lbHP);
-		lbDescription.setHorizontalAlignment(SwingConstants.TRAILING);
-		
-
-		lbDescription.setBounds(10, 320, 240, 76);
-		infopanel.add(lbDescription);
 		
 		JLabel lblNewLabel = new JLabel("Unit:");
 		lblNewLabel.setBounds(70, 270, 45, 13);
@@ -184,6 +182,13 @@ public class gameWindow {
 		JLabel lblNewLabel_1 = new JLabel("HP:");
 		lblNewLabel_1.setBounds(70, 290, 45, 13);
 		infopanel.add(lblNewLabel_1);
+		textArea.setFont(new Font("Tahoma", Font.BOLD, 13));
+		textArea.setBackground(SystemColor.control);
+		
+		
+		textArea.setEditable(false);
+		textArea.setBounds(10, 313, 240, 75);
+		infopanel.add(textArea);
 		this.CreateFrontPanel(i);
 		JLabel lbbackground = new JLabel(iconbackground);
 		lbbackground.setBounds(0, 0, 768, 480);
@@ -618,23 +623,23 @@ public class gameWindow {
                     {
                         case "Soldier":
                         	lbPortrait.setIcon(iconSoldier);
-                            lbDescription.setText("Binh lính cận chiến cơ bản, trang bị giáp và kiếm \nTầm di chuyển: 3\nTầm đánh: 1");
+                            textArea.setText("Binh lính cận chiến cơ bản, \ntrang bị giáp và kiếm \nTầm di chuyển: 3\nTầm đánh: 1");
                             break;
                         case "Archer":
                         	lbPortrait.setIcon(iconArcher);
-                            lbDescription.setText("Xạ thủ. Linh hoạt, nhưng sát thương không nhiều\nDi chuyển: 3\nTầm đánh: 3");
+                            textArea.setText("Xạ thủ. Linh hoạt, nhưng \nsát thương không nhiều\nDi chuyển: 3\nTầm đánh: 3");
                             break;
                         case "Knight":
                         	lbPortrait.setIcon(iconKnight);
-                            lbDescription.setText("Hiệp sĩ dũng mãnh, thiện chiến vô song. Kiếm và giáp cực xịn\nDi chuyển: 4\nTầm đánh: 1");
+                            textArea.setText("Hiệp sĩ dũng mãnh, thiện chiến \nvô song. Kiếm và giáp cực xịn\nDi chuyển: 4\nTầm đánh: 1");
                             break;
                         case "Mage":
                         	lbPortrait.setIcon(iconMage);
-                            lbDescription.setText("Phù thủy với ma pháp cao siêu, chưởng phát chết luôn\nDi chuyển: 2\nTầm đánh: 2");
+                            textArea.setText("Phù thủy với ma pháp cao siêu, \nchưởng phát chết luôn\nDi chuyển: 2\nTầm đánh: 2");
                             break;
                         default:
                         	lbPortrait.setIcon(iconNone);
-                            lbDescription.setText("N/A");
+                            textArea.setText("N/A");
                             break;
                     }
                 }
@@ -642,7 +647,7 @@ public class gameWindow {
                 {
                 	lbUnit.setText("");
                     lbHP.setText("");
-                    lbDescription.setText("");
+                    textArea.setText("");
                 }
     		}
     	};
